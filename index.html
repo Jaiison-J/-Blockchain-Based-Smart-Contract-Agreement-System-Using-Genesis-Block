@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Contract Agreement System</title>
+    <meta name="description" content="Blockchain-Based Smart Contract Agreement System Using Genesis Block - BIC702 Laboratory Project" />
+    <meta property="og:title" content="Smart Contract Agreement System" />
+    <meta property="og:description" content="Blockchain-Based Smart Contract Agreement System Using Genesis Block - BIC702 Laboratory Project" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <!-- App Header & Navigation -->
+    <header class="app-header">
+      <div class="container">
+        <div class="header-inner">
+          <div class="brand-wrapper">
+            <div class="brand-icon">⛓️</div>
+            <div class="brand-info">
+              <span class="badge-bic">BIC702: Blockchain Technology</span>
+              <h1>Smart Contract Agreement System</h1>
+              <p>Decentralized Agreement Ledger using Genesis Block &amp; SHA-256 Cryptographic Verification</p>
+            </div>
+          </div>
+          <div class="header-actions">
+            <button id="verifyBlockchainBtn" class="btn btn-primary" title="Validate all block hashes and links">
+              <span>🔍</span> Verify Blockchain
+            </button>
+            <button id="loadSamplesBtn" class="btn btn-secondary" title="Populate demonstration agreements">
+              <span>📋</span> Load Sample Agreements
+            </button>
+            <button id="demoTamperBtn" class="btn btn-danger" title="Demonstrate tamper detection by altering a block in memory">
+              <span>⚠️</span> Demo Tampering
+            </button>
+            <button id="resetBlockchainBtn" class="btn btn-outline" title="Restore verified pristine blockchain">
+              <span>🔄</span> Reset Blockchain
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- 1. Real-time Status Banner -->
+      <section class="status-banner valid" id="statusBanner">
+        <div class="status-banner-content">
+          <div class="status-indicator-dot green" id="statusIndicatorDot"></div>
+          <div>
+            <h3 id="bannerTitle">Blockchain Valid – Cryptographic Proof Intact</h3>
+            <p id="bannerDesc">All blocks verified via SHA-256 hash recalculation and sequential parent linkage.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button id="resetGenesisBtn" class="btn btn-outline btn-sm" title="Clear all agreements and keep only Genesis Block #0">
+            Clear to Genesis Only
+          </button>
+        </div>
+      </section>
+
+      <!-- 2. Dashboard Statistics Grid -->
+      <section class="dashboard-grid">
+        <div class="stat-card accent-purple">
+          <div class="stat-label">Total Agreements</div>
+          <div class="stat-value" id="statTotalAgreements">0</div>
+          <div class="stat-subtext">Registered contract transactions</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Active Agreements</div>
+          <div class="stat-value" id="statActiveAgreements" style="color: #0369a1;">0</div>
+          <div class="stat-subtext">Legally active contracts</div>
+        </div>
+
+        <div class="stat-card accent-green">
+          <div class="stat-label">Completed Agreements</div>
+          <div class="stat-value" id="statCompletedAgreements" style="color: var(--success-text);">0</div>
+          <div class="stat-subtext">Fulfilled &amp; finalized</div>
+        </div>
+
+        <div class="stat-card accent-purple">
+          <div class="stat-label">Blockchain Blocks</div>
+          <div class="stat-value" id="statTotalBlocks">1</div>
+          <div class="stat-subtext">Including Genesis Block #0</div>
+        </div>
+
+        <div class="stat-card accent-green">
+          <div class="stat-label">Blockchain Status</div>
+          <div class="stat-value" id="statBlockchainStatus">
+            <span class="text-green font-bold">Valid ✓</span>
+          </div>
+          <div class="stat-subtext">SHA-256 Chain Integrity</div>
+        </div>
+      </section>
+
+      <!-- 3. Visual System Flow Diagram -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span>🔄</span> System Architecture &amp; Workflow
+          </h2>
+          <span class="section-subtitle">How agreements are transformed into immutable cryptographic blocks</span>
+        </div>
+        <div class="flow-diagram-container">
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="step-circle">1</div>
+              <div class="step-title">Party A</div>
+              <div class="step-desc">Initiates terms</div>
+            </div>
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-step">
+              <div class="step-circle">2</div>
+              <div class="step-title">Create Agreement</div>
+              <div class="step-desc">Input contract data</div>
+            </div>
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-step">
+              <div class="step-circle">3</div>
+              <div class="step-title">Smart Contract Rules</div>
+              <div class="step-desc">Validate state logic</div>
+            </div>
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-step">
+              <div class="step-circle">4</div>
+              <div class="step-title">Transaction</div>
+              <div class="step-desc">Record payload</div>
+            </div>
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-step">
+              <div class="step-circle">5</div>
+              <div class="step-title">Genesis / Blockchain</div>
+              <div class="step-desc">Links to parent block</div>
+            </div>
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-step">
+              <div class="step-circle">6</div>
+              <div class="step-title">SHA-256 Hash</div>
+              <div class="step-desc">Cryptographic stamp</div>
+            </div>
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-step">
+              <div class="step-circle">7</div>
+              <div class="step-title">Chain Verification</div>
+              <div class="step-desc">Integrity audit</div>
+            </div>
+            <div class="flow-arrow">→</div>
+
+            <div class="flow-step">
+              <div class="step-circle">8</div>
+              <div class="step-title">Party B / User</div>
+              <div class="step-desc">Verified execution</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Main Two-Column Working Grid (Create Form + Smart Contract Rules) -->
+      <section class="section">
+        <div class="two-col-grid">
+          <!-- Create Agreement Form -->
+          <div class="card">
+            <h2 class="card-title">
+              <span>✍️</span> Create Smart Contract Agreement
+            </h2>
+            <form id="createAgreementForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="agreementId">Agreement ID <span class="req">*</span></label>
+                  <input type="text" id="agreementId" required placeholder="e.g. AG-001" />
+                </div>
+                <div class="form-group">
+                  <label for="contractAmount">Contract Amount <span class="req">*</span></label>
+                  <input type="text" id="contractAmount" required placeholder="e.g. ₹ 50,000" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="partyA">Party A (First Party / Initiator) <span class="req">*</span></label>
+                  <input type="text" id="partyA" required placeholder="e.g. ABC Construction Ltd." />
+                </div>
+                <div class="form-group">
+                  <label for="partyB">Party B (Second Party / Counterparty) <span class="req">*</span></label>
+                  <input type="text" id="partyB" required placeholder="e.g. XYZ Steel & Material Supplier" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="agreementTitle">Agreement Title <span class="req">*</span></label>
+                <input type="text" id="agreementTitle" required placeholder="e.g. Material Supply & Delivery Agreement" />
+              </div>
+
+              <div class="form-group">
+                <label for="agreementDesc">Agreement Terms &amp; Description</label>
+                <textarea id="agreementDesc" placeholder="Enter key terms, payment schedule, or delivery specifications..."></textarea>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="startDate">Start Date <span class="req">*</span></label>
+                  <input type="date" id="startDate" required />
+                </div>
+                <div class="form-group">
+                  <label for="endDate">End Date <span class="req">*</span></label>
+                  <input type="date" id="endDate" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Default Agreement Status</label>
+                <input type="text" value="Active (Enforced by Smart Contract)" disabled style="background: #f1edfb; color: #5f5195; font-weight: 600;" />
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px; padding: 11px;">
+                <span>⚡</span> Create Agreement &amp; Mine Block
+              </button>
+            </form>
+          </div>
+
+          <!-- Right Column: Smart Contract Rules & Single Agreement Verifier -->
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- Smart Contract Logic Card -->
+            <div class="card">
+              <h2 class="card-title">
+                <span>📜</span> Smart Contract Rules (Autonomous Logic)
+              </h2>
+              <div class="rules-list">
+                <div class="rule-item">
+                  <div class="rule-num">1</div>
+                  <div class="rule-text">
+                    <strong>Initial State:</strong> Every new agreement is automatically initiated in <strong>Active</strong> status upon block creation.
+                  </div>
+                </div>
+                <div class="rule-item">
+                  <div class="rule-num">2</div>
+                  <div class="rule-text">
+                    <strong>State Transition:</strong> An <strong>Active</strong> agreement can transition to <strong>Completed</strong> upon fulfillment.
+                  </div>
+                </div>
+                <div class="rule-item">
+                  <div class="rule-num">3</div>
+                  <div class="rule-text">
+                    <strong>Immutability:</strong> A <strong>Completed</strong> agreement is permanently locked and cannot be edited, completed again, or cancelled.
+                  </div>
+                </div>
+                <div class="rule-item">
+                  <div class="rule-num">4</div>
+                  <div class="rule-text">
+                    <strong>Termination Rule:</strong> A <strong>Cancelled</strong> agreement is terminal and cannot be reactivated or completed.
+                  </div>
+                </div>
+                <div class="rule-item">
+                  <div class="rule-num">5</div>
+                  <div class="rule-text">
+                    <strong>Cryptographic Non-Repudiation:</strong> Every change is secured by SHA-256 hash linking to the preceding block.
+                  </div>
+                </div>
+              </div>
+              <div class="rules-note">
+                💡 <strong>Educational Note:</strong> These JavaScript functions simulate decentralized smart-contract rules for the BIC702 laboratory evaluation.
+              </div>
+            </div>
+
+            <!-- Agreement Verifier Card -->
+            <div class="card" id="verifyAgreementSection">
+              <h2 class="card-title">
+                <span>🔎</span> Verify Agreement Record
+              </h2>
+              <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
+                Search the blockchain ledger by Agreement ID to verify stored hash integrity and linkage.
+              </p>
+              
+              <div class="verify-search-box">
+                <input type="text" id="verifySearchInput" placeholder="Enter Agreement ID (e.g. AG-001)" />
+                <button id="verifySearchBtn" class="btn btn-primary">Verify</button>
+              </div>
+
+              <div style="margin-bottom: 14px;">
+                <select id="verifySelectId">
+                  <option value="">-- Or select an agreement to verify --</option>
+                </select>
+              </div>
+
+              <div id="verifyResultBox" class="verify-result"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Agreement Records Table -->
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">
+              <span>📑</span> Agreement Records
+            </h2>
+            <span class="section-subtitle">Real-time status of all agreements stored across blockchain blocks</span>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="agreement-table">
+            <thead>
+              <tr>
+                <th>Agreement ID</th>
+                <th>Party A</th>
+                <th>Party B</th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Validity Period</th>
+                <th>Status</th>
+                <th>Block #</th>
+                <th>SHA-256 Hash</th>
+                <th>Smart Contract Actions</th>
+              </tr>
+            </thead>
+            <tbody id="agreementsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+          <div id="agreementsEmptyState" style="text-align: center; padding: 36px 20px; color: var(--text-muted); display: none;">
+            <div style="font-size: 36px; margin-bottom: 8px;">📭</div>
+            <p style="font-size: 14px; font-weight: 600; color: var(--text-secondary);">No Agreement Blocks Mined Yet</p>
+            <p style="font-size: 12px; margin-top: 4px;">Click "Load Sample Agreements" above or fill the form to create your first agreement block.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Blockchain Ledger (Core Requirement) -->
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">
+              <span>⛓️</span> Blockchain Ledger
+            </h2>
+            <span class="section-subtitle">Cryptographically linked chain of blocks starting from Genesis Block #0</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button onclick="document.getElementById('verifyBlockchainBtn').click()" class="btn btn-secondary btn-sm">
+              Verify Chain Links
+            </button>
+          </div>
+        </div>
+
+        <!-- Chain Cards Container -->
+        <div id="blockchainLedgerContainer" class="chain-container">
+          <!-- Dynamically generated blocks -->
+        </div>
+      </section>
+
+      <!-- 7. Educational Concept: How This System Works -->
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">
+              <span>💡</span> How This System Works
+            </h2>
+            <span class="section-subtitle">Nine key stages of decentralized blockchain agreement lifecycle</span>
+          </div>
+        </div>
+
+        <div class="steps-grid">
+          <div class="how-step-card">
+            <div class="step-num-badge">1</div>
+            <div class="step-body">
+              <h4>Genesis Block Created</h4>
+              <p>The blockchain initializes with Block #0 having <code>previousHash = "0"</code> as the root trust anchor.</p>
+            </div>
+          </div>
+
+          <div class="how-step-card">
+            <div class="step-num-badge">2</div>
+            <div class="step-body">
+              <h4>Parties Form Agreement</h4>
+              <p>Party A and Party B agree upon terms, scope, validity timeframe, and contract amount.</p>
+            </div>
+          </div>
+
+          <div class="how-step-card">
+            <div class="step-num-badge">3</div>
+            <div class="step-body">
+              <h4>Transaction Formed</h4>
+              <p>The agreement payload is packaged into a structured immutable transaction object.</p>
+            </div>
+          </div>
+
+          <div class="how-step-card">
+            <div class="step-num-badge">4</div>
+            <div class="step-body">
+              <h4>New Block Appended</h4>
+              <p>A new block is created with an incremented index, timestamp, transaction data, and previous block's hash.</p>
+            </div>
+          </div>
+
+          <div class="how-step-card">
+            <div class="step-num-badge">5</div>
+            <div class="step-body">
+              <h4>SHA-256 Hash Generated</h4>
+              <p>Browser Web Crypto API generates a unique 64-character hexadecimal SHA-256 digital fingerprint.</p>
+            </div>
+          </div>
+
+          <div class="how-step-card">
+            <div class="step-num-badge">6</div>
+            <div class="step-body">
+              <h4>Previous Hash Stored</h4>
+              <p>Each block explicitly stores the previous block's hash, forming an unbreakable forward chain.</p>
+            </div>
+          </div>
+
+          <div class="how-step-card">
+            <div class="step-num-badge">7</div>
+            <div class="step-body">
+              <h4>Sequential Chain Built</h4>
+              <p>Block 0 (Genesis) &rarr; Block 1 &rarr; Block 2 &rarr; Block 3 creates a cryptographic ledger.</p>
+            </div>
+          </div>
+
+          <div class="how-step-card">
+            <div class="step-num-badge">8</div>
+            <div class="step-body">
+              <h4>Audit &amp; Verification</h4>
+              <p>Any party can verify agreement validity by recomputing SHA-256 hashes across all blocks.</p>
+            </div>
+          </div>
+
+          <div class="how-step-card">
+            <div class="step-num-badge">9</div>
+            <div class="step-body">
+              <h4>Tamper Detection</h4>
+              <p>If even a single character in an agreement is altered, hash mismatch instantly exposes the tampering.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. Project Information Section (BIC702 Assignment Requirements) -->
+      <section class="section">
+        <div class="project-info-card">
+          <div class="info-grid">
+            <div class="info-block">
+              <h4>Problem Statement</h4>
+              <p>
+                Traditional paper and centralized digital agreements suffer from vulnerabilities including manual record management, unauthorized back-dated alterations, counterparty disputes, and lack of verifiable historical audit trails.
+              </p>
+            </div>
+
+            <div class="info-block">
+              <h4>Blockchain Solution</h4>
+              <p>
+                Agreements are recorded as cryptographic blockchain transactions. Each block is permanently linked to the previous block using SHA-256 cryptographic hashes, making any unauthorized modification immediately detectable.
+              </p>
+            </div>
+
+            <div class="info-block">
+              <h4>System Flow</h4>
+              <p>
+                <strong>Party</strong> &rarr; <strong>Agreement</strong> &rarr; <strong>Smart Contract Rules</strong> &rarr; <strong>Blockchain Transaction</strong> &rarr; <strong>Block</strong> &rarr; <strong>SHA-256 Hash</strong> &rarr; <strong>Verification</strong>
+              </p>
+            </div>
+
+            <div class="info-block">
+              <h4>Technologies Used</h4>
+              <ul>
+                <li>HTML5 Semantic Structure</li>
+                <li>CSS3 (Light Lavender / White Theme)</li>
+                <li>Pure JavaScript (ES6+ Standards)</li>
+                <li>Web Crypto API (SHA-256 Hashing)</li>
+                <li>Browser Local Storage Persistence</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="info-disclaimer">
+            <span>ℹ️</span>
+            <div>
+              <strong>Important Academic Note:</strong> This is an educational blockchain simulation created for the BIC702 Blockchain Technology laboratory assignment. It demonstrates core decentralized principles (Genesis block, parent hashing, smart contract rules, immutability, and tamper detection) using pure JavaScript without requiring real cryptocurrency or gas fees.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal for Detailed Agreement View -->
+    <div id="agreementModalOverlay" class="modal-overlay">
+      <div class="modal-card">
+        <button class="modal-close-btn" onclick="closeAgreementModal()">✕</button>
+        <div id="modalContentBody">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Pure JavaScript Entry Point -->
+    <script type="module" src="/script.js"></script>
+  </body>
+</html>

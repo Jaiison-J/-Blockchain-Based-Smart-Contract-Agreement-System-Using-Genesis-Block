@@ -1,0 +1,6 @@
+{
+  "name": "Smart Contract Agreement System",
+  "description": "Blockchain-Based Smart Contract Agreement System Using Genesis Block - BIC702 Laboratory Project",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
